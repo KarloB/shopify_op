@@ -18,12 +18,10 @@ type Ponuda struct {
 	PrikaziPDV    int           `url:"prikazi_porez"`
 	KupacNaziv    string        `url:"kupac_naziv"`
 	KupacAdresa   string        `url:"kupac_adresa"`
-	KupacOIB      string        `url:"kupac_oib"`
 	NacinPlacanja NacinPlacanja `url:"-"` // nacin_placanja
 	RokPlacanja   time.Time     `url:"-"` // Dozvoljen je ISO 8601 format datuma (npr. 2014-01-01).
 	Usluge        []Usluga      `url:"-"`
 	Napomena      string        `url:"-"`
-	Iban          string        `url:"-"`
 }
 
 type Usluga struct {
@@ -89,7 +87,7 @@ func (t *Solo) CreatePonuda(in *Ponuda) error {
 	}
 
 	usluge := strings.Join(customQueryParams, "&")
-	encodedSecondPart := fmt.Sprintf(`nacin_placanja=%d&iban=%s&napomene=%s&rok_placanja=%s`, in.NacinPlacanja, in.Iban, url.QueryEscape(in.Napomena), in.RokPlacanja.Format("2006-01-02"))
+	encodedSecondPart := fmt.Sprintf(`nacin_placanja=%d&napomene=%s&rok_placanja=%s`, in.NacinPlacanja, url.QueryEscape(in.Napomena), in.RokPlacanja.Format("2006-01-02"))
 	params := fmt.Sprintf("?token=%s&%s&%s&%s", t.token, encodedFirstPart, usluge, encodedSecondPart)
 
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/ponuda%s", t.endpoint, params), nil)

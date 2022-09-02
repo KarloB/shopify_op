@@ -23,9 +23,7 @@ func TestSolo(t *testing.T) {
 		PrikaziPDV:    0,
 		KupacNaziv:    "John Matrix Terminatorović",
 		KupacAdresa:   "Predatorova 58",
-		KupacOIB:      "00000000010",
 		NacinPlacanja: 1,
-		Iban:          "HR1723600001101234565",
 		RokPlacanja:   time.Now().AddDate(0, 0, 7),
 		Napomena:      "Shopify order ID 12345",
 		Usluge: []Usluga{
